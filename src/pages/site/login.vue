@@ -3,7 +3,7 @@
     <div class="container">
       <h3 class="title">
         <img src="../../../static/img/login/logo.png"/>
-        <span class="margin-left-20">潭州教育</span>
+        <span class="margin-left-20"></span>
       </h3>
       <div class="content clear">
         <img src="../../../static/img/login/loginImage.png"/>
