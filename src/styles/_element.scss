@@ -1,0 +1,15 @@
+@charset "UTF-8";
+@import "mixin";
+
+.el-dialog {
+	.dialog-footer {
+		text-align: center;
+	}
+}
+
+.el-breadcrumb {
+	font-size: 16px;
+	.el-breadcrumb__inner a, .el-breadcrumb__inner.is-link {
+		color: $color-black;
+	}
+}

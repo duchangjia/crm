@@ -1,0 +1,263 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CRM系统</title>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <style>
+    .box{
+      width: 360px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .box .form-horizontal .col-sm-9{
+      padding-left: 0;
+    }
+    .box .form-horizontal{
+      margin-top: 20px;
+    }
+    .hide {
+      display: none;
+    }
+    .mt20 {
+      margin-top: 20px;
+    }
+    .tac {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="box login-wrap hide">
+    <form class="form-horizontal" onsubmit="login(); return false" style="margin-top: 20px;">
+      <div class="form-group">
+        <label class="col-sm-3 control-label">用户名:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="userName" placeholder="用户名">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">密码:</label>
+        <div class="col-sm-9">
+          <input type="password" class="form-control" id="transformPassword" placeholder="密码">
+        </div>
+      </div>
+
+      <div class="form-group mt20 tac">
+        <button type="submit" class="btn btn-primary btn-login" style="width: 120px">登录</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="box form-wrap hide">
+    <form class="form-horizontal" onsubmit="save(); return false;">
+      <div class="form-group">
+        <label class="col-sm-3 control-label">姓名:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="nick" placeholder="姓名">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">手机:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="mobile" placeholder="手机">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">座机:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="machine" placeholder="座机">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">微信:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="wechat" placeholder="微信">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">QQ:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="tencent" placeholder="QQ">
+        </div>
+      </div>
+      <div class="clearfix">
+        <label class="col-sm-4 control-label">意向项目:</label>
+        <div class="col-sm-8">
+          <select class="form-control" id="intentSubject">
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group mt20 tac">
+        <button type="submit" class="btn btn-primary" style="width: 120px">保存并上传</button>
+      </div>
+    </form>
+  </div>
+  <script src="./js/jquery-1.11.0.min.js"></script>
+  <script>
+    var projectOptions;
+
+    function setCookie(name, value, days) {
+        var d = new Date();
+        d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = name + "=" + value + "; " + expires;
+    }
+    function getCookie(name) {
+        var name = name + "=";
+        var arr = document.cookie.split(';');
+        for(var i=0; i< arr.length; i++) {
+            var c = arr[i];
+            while (c.charAt(0)==' ') c = c.substring(1);
+            if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+        }
+        return "";
+    }
+    function clearCookie(name) {
+        setCookie(name, "", -1);
+    }
+
+    // 检查cookie
+    var checkCookie = function () {
+      var csToken = getCookie('csToken');
+      if (!csToken) {
+        $('.login-wrap').removeClass('hide');
+        $('.form-wrap').addClass('hide')
+      } else {
+        console.log(typeof csToken)
+        $('.login-wrap').addClass('hide');
+        $('.form-wrap').removeClass('hide');
+
+        getProjectOptions();
+      }
+    }
+
+    // ajax登录
+    var login = function() {
+      var userName = $.trim($('#userName').val()), transformPassword = $.trim($('#transformPassword').val());
+      console.log(userName, transformPassword);
+
+      $.ajax({
+        type: 'POST',
+        url: '/api/customer/login',
+        data: {userName: userName, transformPassword: transformPassword},
+        success: function(res) {
+          console.log(res)
+          if (res.status == "0") {
+            if (res.data && res.data.token) {
+              setCookie('csToken', res.data.token, { expires: 7, path: '/' });
+              checkCookie();
+            }
+          } else {
+            handleError(res.msg, res.status)
+          }
+        },
+        error: function(err) {
+          handleError(err.message, 2)
+        },
+        dataType: 'json'
+      });
+    }
+
+    // 处理请求出错
+    var handleError = function(msg, status) {
+      alert(msg || '服务器出错了')
+      if (status == 2) {
+        clearCookie('csToken');
+      }
+    }
+
+    // 初始化意向项目列表
+    var initProject = function() {
+      console.log(projectOptions)
+      if (projectOptions && projectOptions.length) {
+        var html = '<option>请选择</option>';
+        for (var i = 0; i < projectOptions.length; i++) {
+          var item = projectOptions[i];
+          html += '<option value="' + item.proId + '">' + item.proName + '</option>';
+        }
+        $('#intentSubject').html(html);
+      }
+    }
+
+    // 获取意向项目
+    var getProjectOptions = function() { // /api/project/qryAllProject
+      if (projectOptions && projectOptions.length) {
+        initProject();
+      } else {
+        $.ajax({
+          type: 'POST',
+          url: '/api/project/qryAllProject',
+          headers: {
+            'token': getCookie('csToken')
+          },
+          success: function(res) {
+            console.log(res)
+            if (res.status == "0") {
+              if (res.data && res.data.list) {
+                projectOptions = res.data.list
+                initProject();
+              }
+            } else {
+              handleError(res.msg, res.status)
+            }
+          },
+          error: function(err) {
+            handleError(err.message)
+          },
+          dataType: 'json'
+        });
+      }
+    }
+
+    // 提交表单保存数据
+    var save = function() {
+      var nick = $.trim($('#nick').val()),
+          mobile = $.trim($('#mobile').val()),
+          wechat = $.trim($('#wechat').val()),
+          tencent = $.trim($('#tencent').val()),
+          intentSubject = $.trim($('#intentSubject').val());
+
+      console.log(nick, mobile, wechat, tencent, intentSubject);
+
+      $.ajax({
+        type: 'POST',
+        url: '/api/customer/from',
+        data: {
+          nick: nick,
+          mobile: mobile,
+          wechat: wechat,
+          tencent: tencent,
+          intentSubject: intentSubject
+        },
+        headers: {
+          'token': getCookie('csToken')
+        },
+        success: function(res) {
+          console.log(res)
+          if (res.status == "0") {
+            alert('保存成功！');
+            location.href = location.href;
+          } else {
+            handleError(res.msg, res.status)
+          }
+        },
+        error: function(err) {
+          handleError()
+        },
+        dataType: 'json'
+      });
+    }
+
+    $(function() {
+      checkCookie();
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,363 @@
+@import "mixin";
+
+body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, p, h1, h2, h3, h4, h5, h6, i, b, textarea, button, input, select, figure, figcaption {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-style: normal;
+  text-decoration: none;
+  border: none;
+  font-family: "Microsoft Yahei";
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  &:hover {
+    outline: none;
+  }
+}
+
+input[type="button"], input[type="submit"], input[type="search"], input[type="reset"] {
+  -webkit-appearance: none;
+}
+
+textarea {
+  -webkit-appearance: none;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  background: #F3F3F3;
+}
+
+body {
+  background: #f4f4f4;
+  color: #4b4b4b;
+  font: 14px/20px "Microsoft Yahei",'Hiragino Sans GB',arial,'\5b8b\4f53',sans-serif;
+}
+
+.clear:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.clear {
+  zoom: 1;
+}
+
+.fl {
+  float: left !important;
+}
+
+.fr {
+  float: right !important;
+}
+
+.mt10 {
+  margin-top: 10px !important;
+}
+.mt20 {
+  margin-top: 20px !important;
+}
+.mt30 {
+  margin-top: 30px !important;
+}
+.mt40 {
+  margin-top: 40px !important;
+}
+
+.mb10 {
+  margin-bottom: 10px !important;
+}
+.mb20 {
+  margin-bottom: 20px !important;
+}
+.mb30 {
+  margin-bottom: 30px !important;
+}
+.mb40 {
+  margin-bottom: 40px !important;
+}
+
+.mr10 {
+  margin-right: 10px !important;
+}
+.mr20 {
+  margin-right: 20px !important;
+}
+
+.tal {
+  text-align: left !important;
+}
+
+.tar {
+  text-align: right !important;
+}
+
+.tac {
+  text-align: center !important;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.hide {
+  display: none !important;
+}
+
+.show {
+  display: block;
+}
+
+.white {
+  color: $color-white !important;
+}
+.gray {
+  color: $color-gray !important;
+}
+
+.table {
+  .tb-hd {
+    th {
+      text-align: center;
+      background: #e4f5fe;
+    }
+  }
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.padding-20 {
+  padding: 20px;
+}
+
+.padding-bottom-20 {
+  padding-bottom: 20px;
+}
+
+.padding-top-20 {
+  padding-top: 20px;
+}
+
+.paddding-left-20 {
+  padding-left: 20px
+}
+
+.padding-right-20 {
+  padding-right: 20px
+}
+
+.padding-left-right-20 {
+  padding: 0px 20px;
+}
+
+.padding-top-bottom-20 {
+  padding: 20px 0px;
+}
+
+.margin-top-20 {
+  margin-top: 20px;
+}
+
+.margin-bottom-20 {
+  margin-bottom: 20px;
+}
+
+.margin-left-20 {
+  margin-left: 20px;
+}
+
+.margin-right-20 {
+  margin-right: 20px;
+}
+
+.margin-top-10 {
+  margin-top: 10px;
+}
+
+.margin-bottom-10 {
+  margin-bottom: 10px;
+}
+
+.margin-left-10 {
+  margin-left: 10px;
+}
+
+.margin-right-10 {
+  margin-right: 10px;
+}
+
+.full-page {
+  min-width: 1280px;
+  height: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.boldFont {
+  font-weight: bold;
+}
+
+.ver-middle {
+  vertical-align: middle;
+}
+
+.actionBtn {
+  font-family: MicrosoftYaHei;
+  font-size: 14px;
+  color: rgb(0, 154, 255);
+}
+
+.main-container {
+  position: relative;
+  margin: 20px;
+  //min-width: 1240px;
+  //height: calc(100% - 140px);
+  min-height: calc(100% - 100px);
+  box-sizing: border-box;
+  background: #fff;
+  //box-shadow: 0px 5px 8px 0 rgba(143, 143, 143, 0.08);
+  /*  @include clearfix;  */
+}
+
+.main-inner {
+  padding: 20px;
+}
+
+.g-title {
+  padding: 20px 20px 20px 0;
+  height: 60px;
+  h2 {
+    position: relative;
+    float: left;
+    padding-left: 16px;
+    line-height: 20px;
+    font-size: 16px;
+    color: #4b4b4b;
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 20px;
+      background: $color-blue;
+    }
+  }
+}
+
+.breadcrumb-wp {
+  position: relative;
+  margin-left: -20px;
+  margin-bottom: 20px;
+  padding-left: 16px;
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 4px;
+    height: 20px;
+    background-color: #3aa5fa;
+  }
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+  & > h2, .el-breadcrumb {
+    float: left;
+    line-height: 20px;
+    font-size: 16px;
+  }
+}
+
+.title-header {
+  font-size: 18px;
+  color: #4b4b4b;
+  padding-left: 15px;
+  border-left: 4px solid #3aa5fa;
+}
+
+.white-bg {
+  background-color: white;
+}
+
+.border-top {
+  border-top: 1px solid rgb(230, 230, 230);
+}
+
+.border-bottom {
+  border-bottom: 1px solid rgb(230, 230, 230);
+}
+
+//登陆页面element-ui修改
+.login-wrapper {
+  .el-input--prefix .el-input__inner {
+    padding-left: 70px;
+    border: none;
+    border-bottom: 1px solid rgb(175, 189, 204);
+    border-radius: 0px;
+  }
+}
+
+//导航模块element-ui的修改
+.header-container {
+  .el-menu--horizontal {
+    .el-menu-item {
+      &:hover {
+        color: #009aff !important;
+        border-bottom: 2px solid #009aff !important;
+      }
+    }
+    .el-submenu__title {
+      &:hover {
+        color: #009aff !important;
+        border-bottom: 2px solid #009aff !important;
+        i {
+          color: #009aff !important;
+        }
+      }
+    }
+  }
+}
+
+//导航模块下拉模块UI修改
+.el-menu--horizontal .el-menu .el-menu-item:hover {
+  color: #FFFFFF !important;
+  background-color: rgba(0, 154, 255, 1) !important;
+}
+
+//修改modal中返回和保存按钮样式
+.el-dialog__footer {
+  .el-button {
+    min-width: 180px;
+  }
+  .el-button--default {
+    border: solid 2px #009aff;
+    color: #3aa5fa;
+  }
+}
